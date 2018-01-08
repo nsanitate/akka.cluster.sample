@@ -2,7 +2,7 @@
 using Akka.Actor;
 using Akka.Configuration;
 
-namespace Samples.Cluster.Simple
+namespace Sample.Cluster.Simple
 {
     class Program
     {

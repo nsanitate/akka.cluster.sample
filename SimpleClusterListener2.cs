@@ -3,7 +3,7 @@ using Akka.Cluster;
 using Akka.Event;
 using static Akka.Cluster.ClusterEvent;
 
-namespace Samples.Cluster.Simple
+namespace Sample.Cluster.Simple
 {
     public class SimpleClusterListener2 : UntypedActor
     {
