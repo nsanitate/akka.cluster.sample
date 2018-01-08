@@ -41,15 +41,14 @@ namespace Samples.Cluster.Simple
 
             foreach (var port in ports)
             {
-                //Override the configuration of the port
-                var config =
-                    ConfigurationFactory.ParseString("akka.remote.dot-netty.tcp.port=" + port)
-                        .WithFallback(fallback);
+                // Override the configuration of the port
+                var config = ConfigurationFactory.ParseString("akka.remote.dot-netty.tcp.port=" + port)
+                  .WithFallback(fallback);
 
-                //create an Akka system
+                // Create an Akka system
                 var system = ActorSystem.Create("ClusterSystem", config);
 
-                //create an actor that handles cluster domain events
+                // Create an actor that handles cluster domain events
                 system.ActorOf(Props.Create(typeof(SimpleClusterListener)), "clusterListener");
             }
         }
