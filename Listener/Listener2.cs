@@ -5,12 +5,12 @@ using static Akka.Cluster.ClusterEvent;
 
 namespace Sample.Cluster.Simple
 {
-    public class SimpleClusterListener : UntypedActor
+    public class Listener2 : UntypedActor
     {
         protected ILoggingAdapter Log;
         protected Akka.Cluster.Cluster Cluster;
 
-        public SimpleClusterListener()
+        public Listener2()
         {
             Log = Logging.GetLogger(Context.System, this);
             Cluster = Akka.Cluster.Cluster.Get(Context.System);
@@ -21,7 +21,7 @@ namespace Sample.Cluster.Simple
         /// </summary>
         protected override void PreStart()
         {
-            Cluster.Subscribe(Self, InitialStateAsEvents, typeof(IMemberEvent), typeof(UnreachableMember));
+            Cluster.Subscribe(Self, typeof(IMemberEvent), typeof(UnreachableMember));
         }
 
         /// <summary>
@@ -36,6 +36,9 @@ namespace Sample.Cluster.Simple
         {
             switch (message)
             {
+                case CurrentClusterState state:
+                    Log.Info("Current members: {0}", state.Members);
+                    break;
                 case MemberUp mUp:
                     Log.Info("Member is Up: {0}", mUp.Member);
                     break;
@@ -50,5 +53,8 @@ namespace Sample.Cluster.Simple
                     break;
             }
         }
+
+        public static Props Props() =>
+            Akka.Actor.Props.Create(() => new Listener2()); 
     }
 }

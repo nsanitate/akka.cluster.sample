@@ -49,7 +49,7 @@ namespace Sample.Cluster.Simple
                 var system = ActorSystem.Create("ClusterSystem", config);
 
                 // Create an actor that handles cluster domain events
-                system.ActorOf(Props.Create(typeof(SimpleClusterListener)), "clusterListener");
+                system.ActorOf(Listener.Props(), "clusterListener");
             }
         }
     }
